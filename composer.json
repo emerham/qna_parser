@@ -1,0 +1,16 @@
+{
+  "name": "osuwams/qnabot_parser",
+  "description": "Parse the QnA Dump from Amazon's QnA Bot",
+  "minimum-stability": "stable",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Matthew Brabham",
+      "email": "matthew.brabham@oregonstate.edu"
+    }
+  ],
+  "require": {
+    "ext-json": "*",
+    "phpoffice/phpspreadsheet": "^1.6"
+  }
+}
