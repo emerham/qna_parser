@@ -1,6 +1,6 @@
 {
   "name": "emerham/qnabot_parser",
-  "description": "Parse the QnA Dump from Amazon's QnA Bot",
+  "description": "Parse the QnA Dump from Amazon's QnA Bot into a Spreadsheet for use in Botium Box.",
   "minimum-stability": "stable",
   "license": "GPL-2.0-or-later",
   "authors": [
