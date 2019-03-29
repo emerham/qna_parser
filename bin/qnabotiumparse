@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+include_once __DIR__.'/../vendor/autoload.php';
+
+$application = new Emerham\QnaParser();
+$application->runParse($_SERVER["argc"], $_SERVER["argv"]);
