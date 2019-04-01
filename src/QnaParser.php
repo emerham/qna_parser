@@ -26,7 +26,10 @@ final class QnaParser
         $outPutFile = $argv[2];
 
         $qnaFile = file_get_contents($inputFile);
-
+        // Remove the BOM header that the QnA Bot adds in the bump.
+        $bom = pack('H*', 'EFBBBF');
+        $qnaFile = preg_replace("/^$bom/", '', $qnaFile);
+//        $qnaFile = str_replace("\xEF\xBB\xBF", '', $qnaFile);
         if (self::isJson($qnaFile)) {
             $qnaFileParsed = json_decode($qnaFile, true);
         } else {
