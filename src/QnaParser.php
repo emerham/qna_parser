@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 final class QnaParser
 {
     /**
-     * The Main run fuction
+     * The Main run function.
      *
      * @param int   $argc
      * @param array $argv
@@ -74,12 +74,18 @@ final class QnaParser
     {
         $workSheets = [];
         foreach ($qnaData['qna'] as $qna) {
-            $workSheets[$qna['t']][] = [
-                'q' => $qna['q'][0],
-                'a' => $qna['a'],
-            ];
+            if (empty($qna['t'])) {
+                $workSheets["Default"][] = [
+                    'q' => $qna['q'][0],
+                    'a' => $qna['a'],
+                ];
+            } else {
+                $workSheets[$qna['t']][] = [
+                    'q' => $qna['q'][0],
+                    'a' => $qna['a'],
+                ];
+            }
         }
-
         return $workSheets;
     }
 
@@ -135,7 +141,7 @@ final class QnaParser
         try {
             $writer->save($outPutFile);
         } catch (Exception $exception) {
-            printf("Failed to save Workbook %bookname: %exception", $writer,
+            echo sprintf("Failed to save Workbook %s",
                 $exception);
             exit(1);
         }
