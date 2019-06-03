@@ -143,7 +143,7 @@ final class QnaParser
      * Save the workbook.
      *
      * @param string $outPutFile
-     * @param Xlsx   $workBook
+     * @param Xlsx   $writer
      */
     private function saveWorkbook(string $outPutFile, Xlsx $writer)
     {
