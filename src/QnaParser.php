@@ -86,6 +86,7 @@ final class QnaParser
                 ];
             }
         }
+
         return $workSheets;
     }
 
@@ -110,8 +111,10 @@ final class QnaParser
                         $myTempSheet = $workBook->createSheet();
                         $myTempSheet->setTitle($group);
                     } catch (Exception $exception) {
-                        printf("Failed to create a new sheet: %exception",
-                            $exception);
+                        printf(
+                            "Failed to create a new sheet: %exception",
+                            $exception
+                        );
                         exit(1);
                     }
                 }
@@ -120,11 +123,17 @@ final class QnaParser
             }
             foreach ($qna as $section) {
                 $myTempSheet = $workBook->getSheetByName($group);
-                $myTempSheet->setCellValueByColumnAndRow(1, $row,
-                    $section['q']);
+                $myTempSheet->setCellValueByColumnAndRow(
+                    1,
+                    $row,
+                    $section['q']
+                );
                 $row += 1;
-                $myTempSheet->setCellValueByColumnAndRow(2, $row,
-                    $section['a']);
+                $myTempSheet->setCellValueByColumnAndRow(
+                    2,
+                    $row,
+                    $section['a']
+                );
                 $row += 1;
             }
         }
@@ -141,8 +150,10 @@ final class QnaParser
         try {
             $writer->save($outPutFile);
         } catch (Exception $exception) {
-            echo sprintf("Failed to save Workbook %s",
-                $exception);
+            echo sprintf(
+                "Failed to save Workbook %s",
+                $exception
+            );
             exit(1);
         }
     }
