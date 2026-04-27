@@ -30,7 +30,7 @@ final class QnaParser
         $bom = pack('H*', 'EFBBBF');
         $qnaFile = preg_replace("/^$bom/", '', $qnaFile);
 //        $qnaFile = str_replace("\xEF\xBB\xBF", '', $qnaFile);
-        if (self::isJson($qnaFile)) {
+        if ($this->isJson($qnaFile)) {
             $qnaFileParsed = json_decode($qnaFile, true);
         } else {
             printf("Input file is not valid JSON");
@@ -39,13 +39,13 @@ final class QnaParser
         // Create a new spreadsheet.
         $workBook = new Spreadsheet();
         // Parse all the questions and get an array back.
-        $workSheets = self::parseQnaBotQuestions($qnaFileParsed);
+        $workSheets = $this->parseQnaBotQuestions($qnaFileParsed);
         // Create the worksheets to use in the botium.
-        self::createSheet($workSheets, $workBook);
+        $this->createSheet($workSheets, $workBook);
         // Create a new Xlsx Object for writing.
         $writer = new Xlsx($workBook);
         // Save the workbook with the given file name.
-        self::saveWorkbook($outPutFile, $writer);
+        $this->saveWorkbook($outPutFile, $writer);
         $workBook->disconnectWorksheets();
     }
 
@@ -104,6 +104,7 @@ final class QnaParser
             if (!$workBook->getSheetByName($group)) {
                 if (!$renamedFirstSheet) {
                     $workBook->getActiveSheet()->setTitle($group);
+                    /** @var \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $myTempSheet */
                     $myTempSheet = $workBook->getActiveSheet();
                     $renamedFirstSheet = true;
                 } else {
@@ -118,20 +119,18 @@ final class QnaParser
                         exit(1);
                     }
                 }
-                $myTempSheet->setCellValueByColumnAndRow(1, 1, 'Human');
-                $myTempSheet->setCellValueByColumnAndRow(2, 1, 'Bot');
+                $myTempSheet->setCellValue([1, 1], 'Human');
+                $myTempSheet->setCellValue([2, 1], 'Bot');
             }
             foreach ($qna as $section) {
                 $myTempSheet = $workBook->getSheetByName($group);
-                $myTempSheet->setCellValueByColumnAndRow(
-                    1,
-                    $row,
+                $myTempSheet->setCellValue(
+                    [1, $row],
                     $section['q']
                 );
                 $row += 1;
-                $myTempSheet->setCellValueByColumnAndRow(
-                    2,
-                    $row,
+                $myTempSheet->setCellValue(
+                    [2, $row],
                     $section['a']
                 );
                 $row += 1;
